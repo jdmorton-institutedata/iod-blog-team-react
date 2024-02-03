@@ -1,8 +1,14 @@
+import { styled } from "@mui/material/styles";
+
+const PageFooter = styled("footer")(({theme}) => ({
+  color: theme.palette.text.primary,
+}));
+
 const Footer = () => {
   return (
-    <footer>
-      <p>&copy; 2021</p>
-    </footer>
+    <PageFooter>
+      <p>&copy; 2021 IOD</p>
+    </PageFooter>
   );
 }
 

@@ -29,7 +29,7 @@ const Layout = () => {
           </Grid>
         </Grid>
       </Main>
-      <Footer />
+      <Footer />        
     </Root>
   );
 };
