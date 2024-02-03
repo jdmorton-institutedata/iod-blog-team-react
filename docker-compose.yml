@@ -25,6 +25,8 @@ services:
       DB_USER: 'root'
       DB_PASS: 'pa55word'
       DB_NAME: 'blogdb'
+      DB_SSL: 'false'
+      BASE_URL: 'http://localhost:3000'
     depends_on:
       mysqldb:
         condition: service_started
