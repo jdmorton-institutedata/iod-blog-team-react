@@ -1,3 +1,10 @@
-html, body {
+html,
+body {
   height: 100%;
+}
+
+/* Header links */
+.active{
+  opacity: 0.8;
+  pointer-events: none;
 }
