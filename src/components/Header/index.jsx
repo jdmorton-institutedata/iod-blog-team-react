@@ -1,176 +1,53 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Logo from '../../images/logo.png';
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { NavLink } from "react-router-dom";
+import Button from '@mui/material/Button';
+import { NavLink, Link as RouterLink } from "react-router-dom";
+import Link from '@mui/material/Link';
 
+const LogoLink = styled(Link)({
+  display: 'flex',
+  alignItems: 'center',
+  textDecoration: 'none',
+  color: 'inherit',
+  flexGrow: 1,
+});
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const LogoImg = styled('img')(() => ({ 
+  width: 174,
+  height: 50,
+  marginRight: 10,
 
-function Header() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  "@media (max-width:640px)": {
+    width: 100,
+    height: 28,
+  },
+}));
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+const HeaderLink = styled(Button)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  textDecoration: 'none',
+  color: 'inherit',
+}));
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
+const Header = () => {
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              <MenuItem key="home" onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Home</Typography>
-              </MenuItem>
-              <MenuItem key="home" onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Users</Typography>
-              </MenuItem>
-              <MenuItem key="home" onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Blog</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <NavLink
-              to="/"
-            >
-              <Typography variant="button" display="block">
-                Home
-              </Typography>
-            </NavLink>
-            &nbsp;
-            <NavLink to="/users">
-              <Typography variant="button" display="block">
-                Users
-              </Typography>
-            </NavLink>
-            &nbsp;
-            <NavLink to="/">
-              <Typography variant="button" display="block">
-                Blog
-              </Typography>
-            </NavLink>
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
+      <Toolbar>
+        <LogoLink component={RouterLink} to="/">
+          <LogoImg src={Logo} alt="IOD Blog" />
+          <Typography variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'flex' } }}>IOD Blog Team</Typography>
+        </LogoLink>
+        <nav>
+          <HeaderLink component={NavLink} to="/">Home</HeaderLink>
+          <HeaderLink component={NavLink} to="/users">Users</HeaderLink>
+          <HeaderLink component={NavLink} to="/users">Blog</HeaderLink>
+        </nav>
+      </Toolbar>
     </AppBar>
   );
 }
+
 export default Header;
