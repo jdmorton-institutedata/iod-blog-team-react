@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from '@mui/material/Button';
 import { NavLink, Link as RouterLink } from "react-router-dom";
 import Link from '@mui/material/Link';
+import ThemeSwitch from '../ThemeSwitch';
 
 const LogoLink = styled(Link)({
   display: 'flex',
@@ -45,6 +46,7 @@ const Header = () => {
           <HeaderLink component={NavLink} to="/users">Users</HeaderLink>
           <HeaderLink component={NavLink} to="/users">Blog</HeaderLink>
         </nav>
+        <ThemeSwitch />
       </Toolbar>
     </AppBar>
   );
