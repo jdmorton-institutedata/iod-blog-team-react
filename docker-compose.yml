@@ -3,7 +3,7 @@ version: '3.3'
 services:
   mysqldb:
     image: mysql:8
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: 'blogdb'
       # Password for root access
@@ -18,7 +18,7 @@ services:
 
   blog:
     image: johnmiod/iod-blog-team:latest
-    restart: always
+    restart: unless-stopped
     environment:
       PORT: 3000
       DB_HOST: 'mysqldb'
@@ -27,6 +27,7 @@ services:
       DB_NAME: 'blogdb'
       DB_SSL: 'false'
       BASE_URL: 'http://localhost:3000'
+      CORS_ORIGIN: 'http://localhost:8080'
     depends_on:
       mysqldb:
         condition: service_started
