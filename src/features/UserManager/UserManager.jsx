@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -8,47 +8,46 @@ import { ListItemSecondaryAction } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import { Loader } from "../../components/Loader";
+import { userReducer, initialState } from "./userReducer";
 
 const UserManager = () => {
-  const [users, setUsers] = useState([]);
+  const [state, dispatch] = useReducer(userReducer, initialState);
+  /* const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); */
 
   useEffect(() => {
-    setError(null);
-    setLoading(true);
+    dispatch({ type: "FETCH_USERS_REQUEST" });
     fetch("http://localhost:3000/api/users")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         switch (data.result) {
           case 200:
-            console.log("200");
-            setUsers(data.data);
-            setLoading(false);
+            // console.log("200");
+            dispatch({ type: "FETCH_USERS_SUCCESS", payload: data.data });
             break;
           case 404:
-            console.log("404");
-            setLoading(false);
-            setError(data.message);
+            // console.log("404");
+            dispatch({ type: "FETCH_USERS_FAILURE", payload: data.message });
             break;
           case 500:
-            console.log("500");
-            setError(data.message);
-            setLoading(false);
+            // console.log("500");
+            dispatch({ type: "FETCH_USERS_FAILURE", payload: data.message });
             break;
           default:
-            console.log("default");
-            setError(data.message);
-            setLoading(false);
+            // console.log("default");
+            dispatch({ type: "FETCH_USERS_FAILURE", payload: data.message });
             break;
         }
         // TODO: handle all the possible responses
       })
       .catch(() => {
-        setError("Something went wrong. Please try again later.");
-        setLoading(false);
+        dispatch({
+          type: "FETCH_USERS_FAILURE",
+          payload: "Something went wrong. Please try again later.",
+        });
       });
   }, []);
 
@@ -56,7 +55,7 @@ const UserManager = () => {
     const handleListItemClick = (event) => {
       event.preventDefault();
       const id = event.currentTarget.dataset.id;
-      setSelectedUser(id);
+      dispatch({ type: "SELECT_USER", payload: id });
     };
 
     const deleteUser = (event) => {
@@ -72,17 +71,19 @@ const UserManager = () => {
         .then((data) => {
           console.log(data);
           if (data.result === 200) {
-            setUsers(users.filter((user) => user.id != parseInt(id)));
+            dispatch({ type: "DELETE_USERS_SUCCESS", payload: state.users.filter((user) => user.id != parseInt(id) ) });
           }
+        }).catch(() => {
+          dispatch({ type: "FETCH_USERS_FAILURE", payload: "Something went wrong. Please try again later." });
         });
     };
 
     return (
       <List sx={{ width: "100%" }}>
-        {users.map((user) => (
+        {state.users.map((user) => (
           <ListItemButton
             key={user.id}
-            selected={selectedUser === user.id.toString()}
+            selected={state.selectedUser === user.id.toString()}
             onClick={handleListItemClick}
             data-id={user.id}
           >
@@ -105,11 +106,11 @@ const UserManager = () => {
 
   return (
     <>
-      <Grid xs={12} sm={6}>
-        {!loading ? <UserList /> : <Loader />}
-        {error && <Alert severity="error">{error}</Alert>}
+      <Grid item xs={12} sm={6}>
+        {!state.loading ? <UserList /> : <Loader />}
+        {state.error && <Alert severity="error">{state.error}</Alert>}
       </Grid>
-      <Grid xs={12} sm={6}></Grid>
+      <Grid item xs={12} sm={6}></Grid>
     </>
   );
 };
