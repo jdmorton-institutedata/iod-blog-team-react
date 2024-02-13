@@ -1,19 +1,21 @@
-import { useEffect, useReducer } from "react";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
-import Grid from '@mui/material/Grid';
-import Alert from "@mui/material/Alert";
-import Loader from "../../components/Loader";
-import { userReducer, initialState } from "./userReducer";
+// import { useEffect } from "react";
+// import List from "@mui/material/List";
+// import ListItemButton from "@mui/material/ListItemButton";
+// import ListItemText from "@mui/material/ListItemText";
+// import IconButton from "@mui/material/IconButton";
+// import DeleteIcon from "@mui/icons-material/Delete";
+// import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
+// import Grid from '@mui/material/Grid';
+// import Alert from "@mui/material/Alert";
+// import Loader from "../../components/Loader";
+import { useUser } from "./UserContext";
 
 const UserManager = () => {
-    const [state, dispatch] = useReducer(userReducer, initialState);
+    const state = useUser().state;
+    console.log(state);
+   // const dispatch = useUser().dispatch;
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch({ type: "FETCH_USERS_REQUEST" });
     fetch("http://localhost:3000/api/users")
       .then((response) => response.json())
@@ -41,16 +43,16 @@ const UserManager = () => {
         //;
       }
     );
-  }, []);
+  }, []); */
 
-  const UserList = () => {
+  /* const UserList = () => {
     const handleListItemClick = (event) => {
       event.preventDefault();
       const id = event.currentTarget.dataset.id;
       dispatch({ type: "SELECT_USER", payload: id });
-    };
+    }; */
 
-    const deleteUser = (event) => {
+    /* const deleteUser = (event) => {
       const deleteUser = confirm("Are you sure you want to delete this user?");
       if (!deleteUser) {
         return false;
@@ -73,16 +75,16 @@ const UserManager = () => {
           // setLoading(false);
         }
       );
-      };
+      }; */
 
 
 
-    return (
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {state.users.map((user) => (
+    /* return (
+     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+        {users.map((user) => (
           <ListItemButton
             key={user.id}
-            selected={state.selectedUser === user.id.toString()}
+            selected={selectedUser === user.id.toString()}
             onClick={handleListItemClick}
             data-id={user.id}
           >
@@ -94,18 +96,19 @@ const UserManager = () => {
           </ListItemSecondaryAction>
           </ListItemButton>
         ))}
-      </List>
-    );
-  };
+      </List> 
+    ); 
+  };*/
 
   return (
-    <>
+    /* <>
       <Grid item xs={12} sm={6}> 
-        {state.loading ? <Loader /> : <UserList />}
-        {state.error && <Alert severity="error">This is an error Alert.</Alert>}
+        {loading ? <Loader /> : <UserList />}
+        {error && <Alert severity="error">This is an error Alert.</Alert>}
       </Grid>
       <Grid item xs={12} sm={6}></Grid>
-    </>
+    </> */
+    <div>hi</div>
   );
 };
 
