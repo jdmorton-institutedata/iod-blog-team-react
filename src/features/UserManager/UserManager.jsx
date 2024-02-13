@@ -63,6 +63,7 @@ const UserManager = () => {
       if (!deleteUser) {
         return false;
       }
+      dispatch({ type: "DELETE_USERS_REQUEST" });
       const id = event.currentTarget.dataset.id;
       fetch(`http://localhost:3000/api/users/${id}`, {
         method: "DELETE",
@@ -74,7 +75,7 @@ const UserManager = () => {
             dispatch({ type: "DELETE_USERS_SUCCESS", payload: state.users.filter((user) => user.id != parseInt(id) ) });
           }
         }).catch(() => {
-          dispatch({ type: "FETCH_USERS_FAILURE", payload: "Something went wrong. Please try again later." });
+          dispatch({ type: "DELETE_USERS_FAILURE", payload: "Something went wrong. Please try again later." });
         });
     };
 
