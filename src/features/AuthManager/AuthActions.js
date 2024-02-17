@@ -1,7 +1,7 @@
 const login = async (dispatch, email, password) => {
     dispatch({ type: "LOGIN_REQUEST" });
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -9,6 +9,7 @@ const login = async (dispatch, email, password) => {
             body: JSON.stringify({ email, password }),
         });
         const data = await response.json();
+        console.log(data);
         if (data.result === 200) {
             dispatch({ type: "LOGIN_SUCCESS", payload: data.data });
         } else {
